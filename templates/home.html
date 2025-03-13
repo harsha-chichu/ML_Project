@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
 <body>
     <div class="login">
        <h1>Student Exam Performance Indicator</h1>
@@ -108,4 +108,88 @@
        THE  prediction is {{results}}
     </h2>
    <body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-white flex justify-center items-center h-screen">
+    
+    <div class="w-full max-w-lg p-8 rounded-2xl shadow-2xl backdrop-blur-lg bg-gray-800/50 transition-all" id="formContainer">
+        <h1 class="text-2xl font-bold text-center mb-6 animate-fade-in">Student Exam Performance Indicator</h1>
+        
+        <form action="{{ url_for('predict_datapoint') }}" method="post">
+            <!-- Step 1 -->
+            <div id="step1">
+                <label class="block mb-2">Gender</label>
+                <select class="w-full p-2 rounded-lg bg-gray-700 border-none focus:ring-2 focus:ring-blue-500" name="gender" required>
+                    <option selected disabled value="">Select your Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                
+                <label class="block mt-4 mb-2">Race or Ethnicity</label>
+                <select class="w-full p-2 rounded-lg bg-gray-700 border-none focus:ring-2 focus:ring-blue-500" name="ethnicity" required>
+                    <option selected disabled value="">Select Ethnicity</option>
+                    <option value="group A">Group A</option>
+                    <option value="group B">Group B</option>
+                    <option value="group C">Group C</option>
+                    <option value="group D">Group D</option>
+                    <option value="group E">Group E</option>
+                </select>
+                
+                <button class="w-full mt-6 p-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition" type="button" onclick="nextStep(2)">Next</button>
+            </div>
+
+            <!-- Step 2 -->
+            <div id="step2" class="hidden">
+                <label class="block mb-2">Parental Level of Education</label>
+                <select class="w-full p-2 rounded-lg bg-gray-700 border-none focus:ring-2 focus:ring-blue-500" name="parent_education" required>
+                    <option selected disabled value="">Select Parent Education</option>
+                    <option value="associate's degree">Associate's Degree</option>
+                    <option value="bachelor's degree">Bachelor's Degree</option>
+                    <option value="high school">High School</option>
+                    <option value="master's degree">Master's Degree</option>
+                </select>
+                
+                <label class="block mt-4 mb-2">Lunch Type</label>
+                <select class="w-full p-2 rounded-lg bg-gray-700 border-none focus:ring-2 focus:ring-blue-500" name="lunch" required>
+                    <option selected disabled value="">Select Lunch Type</option>
+                    <option value="free/reduced">Free/Reduced</option>
+                    <option value="standard">Standard</option>
+                </select>
+                
+                <button class="w-full mt-6 p-2 bg-blue-500 hover:bg-blue-600 rounded-lg transition" type="button" onclick="nextStep(3)">Next</button>
+            </div>
+
+            <!-- Step 3 -->
+            <div id="step3" class="hidden">
+                <label class="block mb-2">Writing Score (out of 100)</label>
+                <input type="number" class="w-full p-2 rounded-lg bg-gray-700 border-none focus:ring-2 focus:ring-blue-500" name="writing_score" min="0" max="100" required>
+                
+                <label class="block mt-4 mb-2">Reading Score (out of 100)</label>
+                <input type="number" class="w-full p-2 rounded-lg bg-gray-700 border-none focus:ring-2 focus:ring-blue-500" name="reading_score" min="0" max="100" required>
+                
+                <button class="w-full mt-6 p-2 bg-green-500 hover:bg-green-600 rounded-lg transition" type="submit">Predict Your Maths Score</button>
+            </div>
+        </form>
+        
+        <h2 class="text-center text-xl mt-6">Prediction: <span class="font-bold text-green-400">{{ results }}</span></h2>
+    </div>
+    
+    <script>
+        function nextStep(step) {
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.add('hidden');
+            document.getElementById('step' + step).classList.remove('hidden');
+        }
+    </script>
+</body>
 </html>
